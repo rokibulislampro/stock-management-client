@@ -57,9 +57,11 @@ const StockManage = () => {
 
     const formData = new FormData();
     formData.append('name', selectedItem.name);
+    formData.append('category', selectedItem.category);
+    formData.append('subcategory', selectedItem.subcategory);
+    formData.append('purchasePrice', selectedItem.purchasePrice);
     formData.append('salePrice', selectedItem.salePrice);
     formData.append('slots', selectedItem.slots);
-
 
     if (clothImage) {
       formData.append('image', clothImage);
@@ -83,7 +85,9 @@ const StockManage = () => {
         setShowUpdateModal(false);
         setClothImage(null);
         setCategoryImage(null);
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload(); // Reload the page after item is added
+        }, 1500);
       } else {
         throw new Error('Unexpected response status');
       }
@@ -101,7 +105,6 @@ const StockManage = () => {
       [e.target.name]: e.target.value,
     });
   };
-
 
   const handleClothImageChange = e => {
     setClothImage(e.target.files[0]);
@@ -126,7 +129,7 @@ const StockManage = () => {
             >
               <div className="w-20 sm:w-full h-20 sm:h-48 flex justify-center items-center">
                 <img
-                  src={`https://inventory-management-server-omega.vercel.app${cloth.image}`}
+                  src={`http://localhost:5000/uploads/${cloth.image}`}
                   alt={cloth.name}
                   className="w-full h-full object-cover"
                 />

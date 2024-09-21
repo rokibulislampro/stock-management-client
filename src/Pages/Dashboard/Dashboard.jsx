@@ -77,10 +77,10 @@ const Dashboard = () => {
   const calculateTotalPrice = () => {
     return filteredOrders.reduce((total, order) => {
       const extraProfit = parseFloat(order.orderDetails.extraProfit) || 0; // Ensure extraProfit is a number
-      return total + order.orderDetails.total + extraProfit;
+      const orderTotal = parseFloat(order.orderDetails.total) || 0; // Ensure total is a number
+      return total + orderTotal + extraProfit; // Add total and extra profit
     }, 0);
   };
-
 
   const handleFilterChange = newFilter => {
     setFilter(newFilter); // Update the filter type
@@ -202,7 +202,7 @@ const Dashboard = () => {
                 {order.orderDetails.products.map((product, index) => (
                   <div key={index} className="flex items-center mb-2">
                     <img
-                      src={`https://inventory-management-server-omega.vercel.app${product.image}`}
+                      src={`http://localhost:5000/uploads/${product.image}`}
                       alt={product.name}
                       className="w-16 h-16 object-cover rounded mr-4"
                     />
@@ -227,7 +227,10 @@ const Dashboard = () => {
                   </p>
                 )}
                 <p className="font-bold">
-                  Total: {order.orderDetails.total} BDT
+                  Total:{' '}
+                  {order.orderDetails.total +
+                    (parseFloat(order.orderDetails.extraProfit) || 0)}{' '}
+                  BDT
                 </p>
               </div>
             </div>

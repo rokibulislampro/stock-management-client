@@ -51,6 +51,7 @@ const Home = () => {
   }, [selectedDate, orders]);
 
   // Function to filter orders by the selected date
+  // Function to filter orders by the selected date
   const filterOrdersByDate = (orders, date) => {
     const filtered = orders.filter(order =>
       dayjs(order.orderDetails.date).isSame(dayjs(date), 'day')
@@ -64,18 +65,25 @@ const Home = () => {
 
     filtered.forEach(order => {
       const extraProfit = parseFloat(order.orderDetails.extraProfit) || 0; // Handle extraProfit as a number
-      totalIncome += order.orderDetails.total + extraProfit; // Add extraProfit to income
+
+      // Add extraProfit and total (sale price) to income
+      const orderTotal = parseFloat(order.orderDetails.total) || 0;
+      totalIncome += orderTotal + extraProfit;
+
+      // Calculate expense based on purchase price
       order.orderDetails.products.forEach(product => {
         if (product.purchasePrice) {
           totalExpense += product.purchasePrice * product.quantity;
         }
       });
-      totalProfit += extraProfit; // Add extraProfit to totalProfit
+
+      // Profit calculation: Extra profit already added to totalIncome, so we can calculate it from income - expense
+      totalProfit = totalIncome - totalExpense;
     });
 
     setIncome(totalIncome);
     setExpense(totalExpense);
-    setProfit(totalIncome - totalExpense); // Profit calculation with income and expense
+    setProfit(totalProfit); // Final profit calculation
 
     // Set last update (last order's time)
     if (filtered.length > 0) {
@@ -119,7 +127,7 @@ const Home = () => {
               <DatePicker
                 selected={selectedDate}
                 onChange={handleDateChange}
-                className="p-2 text-center rounded shadow-md border-none"
+                className="p-2 w-2/3 text-center rounded shadow-md border-none"
                 placeholderText="Select a date"
               />
             </div>

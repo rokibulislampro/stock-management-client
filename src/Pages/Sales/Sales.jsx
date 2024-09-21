@@ -75,7 +75,7 @@ const Sales = () => {
               <div className="relative">
                 <div className="flex justify-center items-center h-48 lg:h-60">
                   <img
-                    src={`https://inventory-management-server-omega.vercel.app${cloth.image}`}
+                    src={`http://localhost:5000/uploads/${cloth.image}`}
                     alt={cloth.name}
                     className="w-full h-full object-cover transition-all hover:w-[95%] hover:h-[95%]"
                   />

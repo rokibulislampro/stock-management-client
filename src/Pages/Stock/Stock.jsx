@@ -81,7 +81,6 @@ const Stock = () => {
     return acc;
   }, {});
 
-
   const handleChange = e => {
     const { name, type, files, value } = e.target;
 
@@ -96,7 +95,6 @@ const Stock = () => {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    // Create a FormData object to send the file along with the other form data
     const formData = new FormData();
     for (const key in newItem) {
       formData.append(key, newItem[key]);
@@ -104,7 +102,7 @@ const Stock = () => {
 
     try {
       await axiosPublic.post('/cloths', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }, // Ensure multipart form-data is set
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       setStockCloth(prev => [...prev, newItem]);
       setShowPopup(false);
@@ -128,6 +126,11 @@ const Stock = () => {
         position: 'top-right',
         autoClose: 1500,
       });
+
+      // Page reload
+      setTimeout(() => {
+        window.location.reload(); // Reload the page after item is added
+      }, 1500); // Optional: Delay to let the toast notification display
     } catch (error) {
       console.error('Error adding new item:', error);
       toast.error('Failed to add item!', {
@@ -187,7 +190,7 @@ const Stock = () => {
                   <div className="relative">
                     <div className="w-20 sm:w-full h-20 sm:h-48 lg:h-60 flex justify-center items-center">
                       <img
-                        src={`https://inventory-management-server-omega.vercel.app${cloth.image}`} // Full URL for the image
+                        src={`http://localhost:5000/uploads/${cloth.image}`}
                         alt={cloth.name}
                         className="w-full h-full object-cover transition-all hover:w-[95%] hover:h-[95%]"
                       />
@@ -219,7 +222,7 @@ const Stock = () => {
                 >
                   <div className="w-20 sm:w-full h-20 sm:h-48 lg:h-60 flex justify-center items-center">
                     <img
-                      src={`https://inventory-management-server-omega.vercel.app${category.image}`} // Full URL for the category image
+                      src={`http://localhost:5000/uploads/${category.image}`}
                       alt={category.name}
                       className="w-full h-full object-cover transition-all hover:w-[95%] hover:h-[95%]"
                     />

@@ -13,7 +13,7 @@ const CartModal = ({ cloth }) => {
     <div>
       <div className="flex gap-2 items-center">
         <img
-          src={`https://inventory-management-server-omega.vercel.app${cloth.image}`}
+          src={`http://localhost:5000/uploads/${cloth.image}`}
           className="w-1/6"
           alt={cloth.name}
         />
