@@ -51,7 +51,6 @@ const Home = () => {
   }, [selectedDate, orders]);
 
   // Function to filter orders by the selected date
-  // Function to filter orders by the selected date
   const filterOrdersByDate = (orders, date) => {
     const filtered = orders.filter(order =>
       dayjs(order.orderDetails.date).isSame(dayjs(date), 'day')

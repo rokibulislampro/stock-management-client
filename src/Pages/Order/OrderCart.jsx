@@ -11,7 +11,6 @@ import useAxiosPublic from '../../Hooks/useAxiosPublic';
 const OrderCart = () => {
   const { cart, dispatch } = useContext(CartContext);
   const [error, setError] = useState(null);
-  const [extraProfit, setExtraProfit] = useState('');
   const axiosPublic = useAxiosPublic();
 
   const hasCloths = cart.length > 0;
@@ -41,7 +40,6 @@ const OrderCart = () => {
         salePrice: product.salePrice,
       })),
       total: totalPrice(cart),
-      extraProfit: extraProfit || 0,
       date: date, // Add the current date
       time: time, // Add the current time
     };
@@ -75,11 +73,6 @@ const OrderCart = () => {
         setError('Failed to place order. Please try again.');
       }
     }
-  };
-
-
-  const handleExtraProfitChange = e => {
-    setExtraProfit(e.target.value);
   };
 
   return (
@@ -141,18 +134,6 @@ const OrderCart = () => {
                   <span className="text-xl font-extrabold">৳ </span>
                   {totalPrice(cart)}
                 </p>
-              </div>
-              <hr className="my-3" />
-              <div className="flex justify-between items-center w-full">
-                <p className="font-semibold">Extra Profit</p>
-                <input
-                  type="number"
-                  name="extraProfit"
-                  value={extraProfit}
-                  onChange={handleExtraProfitChange}
-                  placeholder="0"
-                  className="border border-green-400 rounded p-1 text-green-500"
-                />
               </div>
               <hr className="my-3" />
               <button

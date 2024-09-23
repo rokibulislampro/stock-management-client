@@ -12,11 +12,7 @@ const CartModal = ({ cloth }) => {
   return (
     <div>
       <div className="flex gap-2 items-center">
-        <img
-          src={`http://localhost:5000/uploads/${cloth.image}`}
-          className="w-1/6"
-          alt={cloth.name}
-        />
+        <img src={cloth.image} className="w-1/6" alt={cloth.name} />
         <div className="ms-0">
           <p className="font-semibold">{cloth.name}</p>
           <p className="font-semibold">

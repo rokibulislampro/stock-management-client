@@ -1,15 +1,15 @@
-import logo from '../../assets/Images/tpg.png';
-import add from '../../assets/Images/add.png';
-import close from '../../assets/Images/close.png';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/Images/tpg.png';
+import add from '../../assets/Images/add.png';
+import close from '../../assets/Images/close.png';
 
 const Stock = () => {
   const [stockCloth, setStockCloth] = useState([]);
   const [viewMode, setViewMode] = useState('stock');
-  const [showPopup, setShowPopup] = useState(false); // State to control popup
+  const [showPopup, setShowPopup] = useState(false);
   const [newItem, setNewItem] = useState({
     name: '',
     category: '',
@@ -35,7 +35,7 @@ const Stock = () => {
     fetchStockCloth();
   }, [axiosPublic]);
 
-  // Setting current date and time when form opens
+  // Set date and time when form opens
   useEffect(() => {
     if (showPopup) {
       const currentDate = new Date();
@@ -45,7 +45,6 @@ const Stock = () => {
         .split(':')
         .slice(0, 2)
         .join(':');
-
       setNewItem(prev => ({
         ...prev,
         date: formattedDate,
@@ -83,18 +82,15 @@ const Stock = () => {
 
   const handleChange = e => {
     const { name, type, files, value } = e.target;
-
-    // Handle file input
     if (type === 'file') {
-      setNewItem(prev => ({ ...prev, [name]: files[0] })); // Store file in state
+      setNewItem(prev => ({ ...prev, [name]: files[0] })); // Store file
     } else {
-      setNewItem(prev => ({ ...prev, [name]: value })); // Handle other input types
+      setNewItem(prev => ({ ...prev, [name]: value })); // Store other inputs
     }
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-
     const formData = new FormData();
     for (const key in newItem) {
       formData.append(key, newItem[key]);
@@ -127,10 +123,9 @@ const Stock = () => {
         autoClose: 1500,
       });
 
-      // Page reload
       setTimeout(() => {
-        window.location.reload(); // Reload the page after item is added
-      }, 1500); // Optional: Delay to let the toast notification display
+        window.location.reload(); // Optional: Page reload after success
+      }, 1500);
     } catch (error) {
       console.error('Error adding new item:', error);
       toast.error('Failed to add item!', {
@@ -140,6 +135,7 @@ const Stock = () => {
     }
   };
 
+  // Render the Stock or Category view dynamically
   return (
     <section>
       <div className="w-full lg:w-[80%] m-auto px-5">
@@ -190,7 +186,7 @@ const Stock = () => {
                   <div className="relative">
                     <div className="w-20 sm:w-full h-20 sm:h-48 lg:h-60 flex justify-center items-center">
                       <img
-                        src={`http://localhost:5000/uploads/${cloth.image}`}
+                        src={cloth.image}
                         alt={cloth.name}
                         className="w-full h-full object-cover transition-all hover:w-[95%] hover:h-[95%]"
                       />
@@ -222,7 +218,7 @@ const Stock = () => {
                 >
                   <div className="w-20 sm:w-full h-20 sm:h-48 lg:h-60 flex justify-center items-center">
                     <img
-                      src={`http://localhost:5000/uploads/${category.image}`}
+                      src={category.image}
                       alt={category.name}
                       className="w-full h-full object-cover transition-all hover:w-[95%] hover:h-[95%]"
                     />
@@ -250,7 +246,6 @@ const Stock = () => {
           <img src={add} alt="Add New Item" />
         </button>
       </div>
-
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-5 rounded-md w-[90%] max-w-lg">

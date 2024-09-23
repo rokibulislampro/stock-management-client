@@ -76,9 +76,8 @@ const Dashboard = () => {
 
   const calculateTotalPrice = () => {
     return filteredOrders.reduce((total, order) => {
-      const extraProfit = parseFloat(order.orderDetails.extraProfit) || 0; // Ensure extraProfit is a number
       const orderTotal = parseFloat(order.orderDetails.total) || 0; // Ensure total is a number
-      return total + orderTotal + extraProfit; // Add total and extra profit
+      return total + orderTotal; // Add total only
     }, 0);
   };
 
@@ -202,7 +201,7 @@ const Dashboard = () => {
                 {order.orderDetails.products.map((product, index) => (
                   <div key={index} className="flex items-center mb-2">
                     <img
-                      src={`http://localhost:5000/uploads/${product.image}`}
+                      src={product.image}
                       alt={product.name}
                       className="w-16 h-16 object-cover rounded mr-4"
                     />
@@ -213,25 +212,14 @@ const Dashboard = () => {
                       </p>
                       <p className="text-sm">Quantity: {product.quantity}</p>
                     </div>
-                    <div>
+                    <div className="space-y-3 text-end mt-7">
                       <p className="font-semibold">{product.salePrice} BDT</p>
+                      <p className="font-bold text-green-500">
+                        Total: {order.orderDetails.total} BDT
+                      </p>
                     </div>
                   </div>
                 ))}
-              </div>
-
-              <div className="flex justify-between items-center text-green-500">
-                {order.orderDetails.extraProfit && (
-                  <p className="text-sm">
-                    Extra Profit: {order.orderDetails.extraProfit} BDT
-                  </p>
-                )}
-                <p className="font-bold">
-                  Total:{' '}
-                  {order.orderDetails.total +
-                    (parseFloat(order.orderDetails.extraProfit) || 0)}{' '}
-                  BDT
-                </p>
               </div>
             </div>
           ))}

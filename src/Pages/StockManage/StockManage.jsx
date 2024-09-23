@@ -129,7 +129,7 @@ const StockManage = () => {
             >
               <div className="w-20 sm:w-full h-20 sm:h-48 flex justify-center items-center">
                 <img
-                  src={`http://localhost:5000/uploads/${cloth.image}`}
+                  src={cloth.image}
                   alt={cloth.name}
                   className="w-full h-full object-cover"
                 />
